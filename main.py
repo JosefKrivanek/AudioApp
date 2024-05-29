@@ -19,13 +19,13 @@ class LoadDialog(FloatLayout):
 
 class SaveDialog(FloatLayout):
     save = ObjectProperty(None)
-    text_input = ObjectProperty(None)
+    wav_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
 
 class Root(FloatLayout):
     loadfile = ObjectProperty(None)
     savefile = ObjectProperty(None)
-    text_input = ObjectProperty(None)
+    wav_input = ObjectProperty(None)
 
     def dismiss_popup(self):
         self._popup.dismiss()
@@ -42,13 +42,13 @@ class Root(FloatLayout):
 
     def load(self, path, filename):
         with open(os.path.join(path, filename[0])) as stream:
-            self.text_input.text = stream.read()
+            self.wav_input.wav = stream.read()
 
         self.dismiss_popup()
 
     def save(self, path, filename):
         with open(os.path.join(path, filename), 'w') as stream:
-            stream.write(self.text_input.text)
+            stream.write(self.wav_input.wav)
 
         self.dismiss_popup()
 
@@ -56,20 +56,20 @@ class Editor(App):
     def build(self):
         main_layout = GridLayout (cols = 1)
 
-        aabb_tlacitko = Button(text="Načíst soubor")
+        aabb_tlacitko = Button(wav="Načíst soubor")
         aabb_tlacitko.bind(on_press=self.on_aabb_pressed)
         main_layout.add_widget(aabb_tlacitko)
 
-        xxyy_tlacitko = Button(text="Uložit")
+        xxyy_tlacitko = Button(wav="Uložit")
         xxyy_tlacitko.bind(on_press=self.on_xxyy_pressed)
         main_layout.add_widget(xxyy_tlacitko)
 
         self.slider1 = Slider(min=0, max=1, value=1, step=0.01)
-        main_layout.add_widget(Label(text="1"))
+        main_layout.add_widget(Label(wav="1"))
         main_layout.add_widget(self.slider1)
 
         self.speed_slider = Slider(min=0, max=1, value=1, step=0.01)
-        main_layout.add_widget(Label(text="2"))
+        main_layout.add_widget(Label(wav="2"))
         main_layout.add_widget(self.speed_slider)
 
         return main_layout
