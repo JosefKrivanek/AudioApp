@@ -1,0 +1,146 @@
+#:kivy 2.1.0
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: 'vertical'
+
+        FileChooserListView:
+            id: filechooser
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                background_color: 1, 0, 0, 1  # Red background for cancel
+                on_release: root.cancel()
+            Button:
+                text: "Load"
+                background_color: 0, 1, 0, 1  # Green background for load
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+<SaveDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: 'vertical'
+
+        TextInput:
+            id: text_input
+            size_hint_y: None
+            height: 30
+            text: root.wav_input
+
+        FileChooserListView:
+            id: filechooser
+            on_selection: text_input.text = filechooser.selection and filechooser.selection[0] or ''
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                background_color: 1, 0, 0, 1  # Red background for cancel
+                on_release: root.cancel()
+            Button:
+                text: "Save"
+                background_color: 0, 1, 0, 1  # Green background for save
+                on_release: root.save(filechooser.path, text_input.text)
+
+<Root>:
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 10
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.1, 0.1, 1  # Dark background
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Button:
+            text: "Načíst soubor"
+            size_hint_y: None
+            height: 50
+            background_color: 0, 0.5, 0.5, 1  # Teal background
+            on_press: root.show_load(self)
+
+        Button:
+            text: "Uložit"
+            size_hint_y: None
+            height: 50
+            background_color: 0.5, 0.5, 0, 1  # Olive background
+            on_press: root.show_save(self)
+
+        Label:
+            text: "Distortion"
+            size_hint_y: None
+            height: 30
+
+        Slider:
+            id: distortion_slider
+            min: 0
+            max: 20
+            value: 10
+            step: 1
+            size_hint_y: None
+            height: 50
+
+        Label:
+            text: "Gain"
+            size_hint_y: None
+            height: 30
+
+        Slider:
+            id: gain_slider
+            min: 0
+            max: 40
+            value: 20
+            step: 1
+            size_hint_y: None
+            height: 50
+
+        Label:
+            text: "Reverb"
+            size_hint_y: None
+            height: 30
+
+        Slider:
+            id: reverb_slider
+            min: 0
+            max: 1
+            value: 0.5
+            step: 0.01
+            size_hint_y: None
+            height: 50
+
+        Label:
+            text: "Chorus"
+            size_hint_y: None
+            height: 30
+
+        Slider:
+            id: chorus_slider
+            min: 0
+            max: 5
+            value: 1
+            step: 0.1
+            size_hint_y: None
+            height: 50
+
+        Button:
+            text: "Play"
+            size_hint_y: None
+            height: 50
+            background_color: 0, 0.5, 0, 1  # Green background
+            on_release: app.play_audio(self)
+
+        Button:
+            text: "Stop"
+            size_hint_y: None
+            height: 50
+            background_color: 0.5, 0, 0, 1  # Red background
+            on_release: app.stop_audio(self)
