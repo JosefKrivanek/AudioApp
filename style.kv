@@ -5,20 +5,23 @@
         size: root.size
         pos: root.pos
         orientation: 'vertical'
+        padding: 10
+        spacing: 10
 
         FileChooserListView:
             id: filechooser
 
         BoxLayout:
             size_hint_y: None
-            height: 30
+            height: 50
+            spacing: 10
             Button:
                 text: "Cancel"
-                background_color: 1, 0, 0, 1  # Red background for cancel
+                background_color: 1, 0, 0, 1  
                 on_release: root.cancel()
             Button:
                 text: "Load"
-                background_color: 0, 1, 0, 1  # Green background for load
+                background_color: 0, 1, 0, 1  
                 on_release: root.load(filechooser.path, filechooser.selection)
 
 <SaveDialog>:
@@ -26,12 +29,15 @@
         size: root.size
         pos: root.pos
         orientation: 'vertical'
+        padding: 10
+        spacing: 10
 
         TextInput:
             id: text_input
             size_hint_y: None
-            height: 30
-            text: root.wav_input
+            height: 50
+            multiline: False
+            font_size: 20
 
         FileChooserListView:
             id: filechooser
@@ -39,24 +45,25 @@
 
         BoxLayout:
             size_hint_y: None
-            height: 30
+            height: 50
+            spacing: 10
             Button:
                 text: "Cancel"
-                background_color: 1, 0, 0, 1  # Red background for cancel
+                background_color: 1, 0, 0, 1  
                 on_release: root.cancel()
             Button:
                 text: "Save"
-                background_color: 0, 1, 0, 1  # Green background for save
+                background_color: 0, 1, 0, 1  
                 on_release: root.save(filechooser.path, text_input.text)
 
 <Root>:
     BoxLayout:
         orientation: 'vertical'
-        spacing: 10
-        padding: 10
+        spacing: 20
+        padding: 20
         canvas.before:
             Color:
-                rgba: 0.1, 0.1, 0.1, 1  # Dark background
+                rgba: 0.95, 0.95, 0.95, 1  
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -64,21 +71,25 @@
         Button:
             text: "Načíst soubor"
             size_hint_y: None
-            height: 50
-            background_color: 0, 0.5, 0.5, 1  # Teal background
+            height: 60
+            background_color: 0, 0.6, 0.6, 1  
+            font_size: 20
             on_press: root.show_load(self)
 
         Button:
             text: "Uložit"
             size_hint_y: None
-            height: 50
-            background_color: 0.5, 0.5, 0, 1  # Olive background
+            height: 60
+            background_color: 0.6, 0.6, 0, 1  
+            font_size: 20
             on_press: root.show_save(self)
 
         Label:
             text: "Distortion"
+            color: 0, 0, 0, 1  
             size_hint_y: None
             height: 30
+            font_size: 18
 
         Slider:
             id: distortion_slider
@@ -91,8 +102,10 @@
 
         Label:
             text: "Gain"
+            color: 0, 0, 0, 1  
             size_hint_y: None
             height: 30
+            font_size: 18
 
         Slider:
             id: gain_slider
@@ -105,8 +118,10 @@
 
         Label:
             text: "Reverb"
+            color: 0, 0, 0, 1  
             size_hint_y: None
             height: 30
+            font_size: 18
 
         Slider:
             id: reverb_slider
@@ -119,8 +134,10 @@
 
         Label:
             text: "Chorus"
+            color: 0, 0, 0, 1  
             size_hint_y: None
             height: 30
+            font_size: 18
 
         Slider:
             id: chorus_slider
@@ -131,16 +148,17 @@
             size_hint_y: None
             height: 50
 
-        Button:
-            text: "Play"
+        BoxLayout:
             size_hint_y: None
-            height: 50
-            background_color: 0, 0.5, 0, 1  # Green background
-            on_release: app.play_audio(self)
-
-        Button:
-            text: "Stop"
-            size_hint_y: None
-            height: 50
-            background_color: 0.5, 0, 0, 1  # Red background
-            on_release: app.stop_audio(self)
+            height: 60
+            spacing: 10
+            Button:
+                text: "Play"
+                background_color: 0, 0.6, 0, 1  
+                font_size: 20
+                on_release: app.play_audio(self)
+            Button:
+                text: "Stop"
+                background_color: 0.6, 0, 0, 1  
+                font_size: 20
+                on_release: app.stop_audio(self)

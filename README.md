@@ -1,4 +1,4 @@
-# Audio Effects Editor
+# Audio Effects 
 
 Tento projekt je aplikace pro úpravu audio souborů pomocí grafického uživatelského rozhraní (GUI) vytvořeného pomocí knihovny Kivy. Aplikace umožňuje načítat, upravovat a ukládat audio soubory pomocí efektů z knihovny Pedalboard.
 

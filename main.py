@@ -47,9 +47,12 @@ class Root(FloatLayout):
 
     def save(self, path, filename):
         if self.wav_path:
-            with AudioFile(self.wav_path) as f:
+            if not filename.endswith('.wav'):
+                filename += '.wav'
+            output_path = os.path.join(path, filename)
+            with AudioFile(self.wav_path, 'r') as f:
                 board = self.create_pedalboard()
-                with AudioFile(os.path.join(path, filename), 'w', f.samplerate, f.num_channels) as o:
+                with AudioFile(output_path, 'w', f.samplerate, f.num_channels) as o:
                     while f.tell() < f.frames:
                         chunk = f.read(f.samplerate)
                         effected = board(chunk, f.samplerate, reset=False)
@@ -68,15 +71,15 @@ class Root(FloatLayout):
 class Editor(App):
     def build(self):
         root = Root()
-        self.root_widget = root  # Assign root to self.root_widget
-        self.sound = None  # Initialize sound variable
+        self.root_widget = root  
+        self.sound = None  
         return root
 
     def play_audio(self, instance):
         if self.root_widget.wav_path:
             if self.sound:
-                self.sound.stop()  # Stop any currently playing sound
-            with AudioFile(self.root_widget.wav_path) as f:
+                self.sound.stop()  
+            with AudioFile(self.root_widget.wav_path, 'r') as f:
                 board = self.root_widget.create_pedalboard()
                 with AudioFile('output.wav', 'w', f.samplerate, f.num_channels) as o:
                     while f.tell() < f.frames:
